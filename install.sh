@@ -1,5 +1,9 @@
 #!/bin/bash
 
+realpath() { # OS X dirty replacement.
+  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 DIR=`pwd`
 SCRIPT=`realpath $0`
 SCRIPTPATH=`dirname $SCRIPT`
