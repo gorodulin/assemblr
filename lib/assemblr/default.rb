@@ -15,7 +15,6 @@ class Assemblr; class Default
       number_of_images: 10,
       number_of_rows: 3,
       output_filename: nil,
-      output_format: :jpg,
       output_quality: 90,
       row_height_px: 296,
       temp_dir: nil,

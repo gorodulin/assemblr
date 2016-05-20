@@ -21,7 +21,7 @@ class Assemblr; class ArgvParser
 
       opts.separator "\nSpecific options:"
 
-      desc = "Output file name. Default: #{options[:output_filename]}"
+      desc = "Output file name."
       opts.on("-o", "--out-file FILE", desc) do |path|
         options[:output_filename] = path
       end
@@ -41,11 +41,6 @@ class Assemblr; class ArgvParser
         options[:keywords] = list.collect do |kw|
           kw.strip.downcase
         end.uniq
-      end
-
-      desc = "Output image format (jpg, png). Default: jpg"
-      opts.on("--format FORMAT", [:jpg, :png], desc) do |format|
-        options[:output_format] = format
       end
 
       desc = "Row height in pixels. Default: #{options[:row_height_px]}"
