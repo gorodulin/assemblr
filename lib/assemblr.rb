@@ -60,7 +60,7 @@ class Assemblr
       widths = *row_hash.values.reduce_to_sum(narrowest_row_width) # Array of pairs [old_width, new_width]
       uncut_widths, cut_widths = *widths.transpose
 
-      row_hash.to_a.each do |i|
+      row_hash.to_a.shuffle!.each do |i| # NOTE: unshuffled row would contain pictures ordered by width.
         image, uncut_width = *i
         uncut_widths.delete_at( i = uncut_widths.index(uncut_width))
         # Add to final image:
@@ -88,6 +88,11 @@ class Assemblr
 
       unless image_data = @flickr_helper.find_by_text(search_text)
         report "not found"
+        next
+      end
+
+      if images.map{ |img| img[:id] }.include?(image_data.id)
+        report "duplicate"
         next
       end
 
