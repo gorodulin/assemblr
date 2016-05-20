@@ -26,6 +26,8 @@ class Assemblr
 
 
   # Delete downloaded files.
+  #
+  # @param [Hash] images
   def clear_cache!(images)
     report "Clearing cache...", newline: false
     images.each do |image|
@@ -115,7 +117,6 @@ class Assemblr
   # Pick a random word from the dictionary file.
   #
   # @note File must contain one word per line.
-  #
   # @note Lines containing non-latin characters, spaces and numbers will be skipped.
   #
   # @see RandomLinePicker
@@ -139,7 +140,8 @@ class Assemblr
   end
 
 
-  # Run all actions:
+  # Run all actions.
+  #
   # * download images
   # * combine them
   # * clear the cache
