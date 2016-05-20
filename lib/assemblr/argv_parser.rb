@@ -16,7 +16,8 @@ class Assemblr; class ArgvParser
     options = Assemblr::Default.options
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: #{$0} [options]"
+      opts.version = "1.0"
+      opts.banner = "Tool to combine Flickr images into a patchwork.\nUsage: #{$0} [options]"
 
       opts.separator "\nSpecific options:"
 
