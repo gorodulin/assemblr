@@ -1,0 +1,5 @@
+.ruby-version
+.ruby-gemset
+*.jpg
+/.bundle
+/vendor/bundle

@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require File.expand_path("../../boot/env", __FILE__)
+
+require "assemblr"
+require "core_ext/array"
+require "flickraw"
+require "rmagick"
+require "tmpdir"
+
+
+begin
+  raise "Ruby should be >=2.1" unless RUBY_VERSION.to_f >= 2.1
+
+  ARGV << "-h" if ARGV.empty?
+  trace = ARGV.include? "--trace"
+  options ||= Assemblr::ArgvParser.parse_arguments(ARGV) # Hash, based on command-line arguments
+  options[:temp_dir] || Dir.mktmpdir
+
+  # Run the app.
+  Assemblr.new(options).run!
+
+rescue Exception => e
+  raise e if trace || (__FILE__ != $0) # Show full trace if run from console
+  STDERR.puts "\nERROR: #{e.message}" unless [SystemExit, Interrupt].include? e.class
+ensure
+  options && FileUtils.remove_dir(options[:temp_dir], true) rescue nil
+end
+
