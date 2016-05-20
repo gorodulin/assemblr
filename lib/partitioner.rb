@@ -1,16 +1,17 @@
 
-# This class solves "Partition problem"
-# See: https://en.wikipedia.org/wiki/Partition_problem
+# This class solves well-known "Partition problem". Yep, it's tricky
 #
-# Yep, it's tricky
+# @see https://en.wikipedia.org/wiki/Partition_problem
 #
-# Note: this class is structure-agnostic, it can group objects of any kind.
+# @note This class is structure-agnostic, it can group objects of any kind.
 class Partitioner
 
   attr_accessor :no_of_sets
   attr_accessor :no_of_passes
 
 
+  # @param [Fixnum, 3] no_of_sets Number of groups to create.
+  # @param [Fixnum, 5] no_of_passes
   def initialize(no_of_sets: 3, no_of_passes: 5)
     @no_of_sets   = no_of_sets
     @no_of_passes = no_of_passes
@@ -20,8 +21,12 @@ class Partitioner
   # Groups pairs into sets (partition).
   # Returns groups of pairs, grouped by closest sums of values.
   #
-  # Input:  { obj1: size1, obj2: size2 ... sizeN: valN }
-  # Result: { {obj1: size1} => sum1, {obj2: size2, obj5: size5} => sum2, {obj3: size3, ...} => sum3, ...}
+  # @example
+  #   hash = { obj1: size1, obj2: size2 ... sizeN: valN }
+  #   distribute(hash) #=> { {obj1: size1} => sum1, {obj2: size2, obj5: size5} => sum2, {obj3: size3, ...} => sum3, ...}
+  #
+  # @param [Hash] hash Objects (keys) and their sizes (values).
+  # @return [Hash] groups of objects (keys) and their sums of sizes (values).
   def distribute(hash)
     pieces = hash.sort_by { |k, v| -v } # Reverse sort.
 

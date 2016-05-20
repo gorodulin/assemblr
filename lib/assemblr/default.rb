@@ -1,7 +1,9 @@
 
-class Assemblr; class Defaults
+class Assemblr; class Default
 
-  def self.get
+  # Default options for the app.
+  # @see the source code of the method.
+  def self.options
     {
       dictionary_file: "/usr/share/dict/words",
       flickr_api_key:  ENV["FLICKR_API_KEY"],

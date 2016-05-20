@@ -4,10 +4,16 @@ require "optparse"
 
 class Assemblr; class ArgvParser
 
+  # Return hash of options or prints summary and exit.
+  #
+  # @param [Array] args List of command-line arguments
+  # @example
+  #   Assemblr::ArgvParser.parse_arguments(ARGV)
+  # @return [Hash] Hash of parameters
   def self.parse_arguments(args)
 
     # Default values
-    options = Assemblr::Defaults.get
+    options = Assemblr::Default.options
 
     opt_parser = OptionParser.new do |opts|
       opts.banner = "Usage: #{$0} [options]"
@@ -87,20 +93,19 @@ class Assemblr; class ArgvParser
       opts.separator "\nCommon options:"
 
       opts.on_tail("-h", "--help", "Show this message") do
-        puts opts # Print out help summary
+        puts opts # Print out help summary.
         exit
       end
-
 
     end
 
     opt_parser.parse!(args)
 
-    FileUtils.touch(options[:output_filename])
-
     if options[:output_filename].nil?
       fail OptionParser::MissingArgument, "Output filename is not specified"
     end
+
+    FileUtils.touch(options[:output_filename]) # Provoke IO error if file is not writeable.
 
     if options[:number_of_rows] > options[:number_of_images]
       fail StandardError, "Please set --total to #{options[:number_of_rows]} or greater value"

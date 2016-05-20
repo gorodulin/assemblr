@@ -1,16 +1,17 @@
 
-require_relative "partitioner"
-require_relative "random_line_picker"
 require_relative "assemblr/argv_parser"
-require_relative "assemblr/defaults"
+require_relative "assemblr/default"
 require_relative "assemblr/flickr_api"
 require_relative "assemblr/renderer"
+require_relative "partitioner"
+require_relative "random_line_picker"
 
-
+# Main class of the app.
+#
 class Assemblr
 
   def initialize(options)
-    @options = Defaults.get.merge(options)
+    @options = Default.options.merge(options)
     if @options[:is_adjust8px]
       @options[:row_height_px] = (@options[:row_height_px]/8).ceil * 8
     end
@@ -24,6 +25,7 @@ class Assemblr
   end
 
 
+  # Delete downloaded files.
   def clear_cache!(images)
     report "Clearing cache...", newline: false
     images.each do |image|
@@ -33,6 +35,9 @@ class Assemblr
   end
 
 
+  # Group images into rows, render result to output file.
+  #
+  # @param [Hash] images
   def combine!(images)
     target_widths = images.collect do |image|
       [image, ((image[:width] * @options[:row_height_px]) / image[:height]).round]
@@ -48,7 +53,7 @@ class Assemblr
 
     report "Rendering '#{@options[:output_filename]}' ...", newline: false
     renderer = Renderer.new
-    # Adjust widths proportionally so that all rows to have identical width
+    # Adjust widths proportionally so that all rows to have identical width.
     rows.each_with_index do |row_hash, row_no|
       widths = *row_hash.values.reduce_to_sum(narrowest_row_width) # Array of pairs [old_width, new_width]
       uncut_widths, cut_widths = *widths.transpose
@@ -65,13 +70,15 @@ class Assemblr
   end
 
 
+  # Download N images from Flickr.
+  #
+  # @return [Hash]
   def download!
-    keywords   = @options[:keywords].clone
-
     report "Temp directory: '#{@options[:temp_dir]}'"
 
     # Build a list of images to download. (search Flickr).
     images = []
+    keywords = @options[:keywords].clone
 
     until images.count == @options[:number_of_images]
       search_text = keywords.pop || random_word
@@ -105,6 +112,14 @@ class Assemblr
   end
 
 
+  # Pick a random word from the dictionary file.
+  #
+  # @note File must contain one word per line.
+  #
+  # @note Lines containing non-latin characters, spaces and numbers will be skipped.
+  #
+  # @see RandomLinePicker
+  # @return [String]
   def random_word
     @dictionary ||= ::RandomLinePicker.new(filename: @options[:dictionary_file])
     loop do
@@ -114,13 +129,20 @@ class Assemblr
   end
 
 
+  # Print out a string if verbose mode is enabled.
+  #
+  # @param [String] text Text to print.
+  # @param [Boolean] newline Append <tt>\n</tt> newline symbol.
   def report(text, newline: true)
     return unless verbose?
     newline ? puts(text) : print(text)
   end
 
 
-  # Download, then combine images.
+  # Run all actions:
+  # * download images
+  # * combine them
+  # * clear the cache
   def run!
     images = download!
     combine!(images)

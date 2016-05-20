@@ -1,3 +1,6 @@
+/.yardoc
+/doc
+/.vimignore
 .ruby-version
 .ruby-gemset
 *.jpg

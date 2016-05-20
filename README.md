@@ -3,6 +3,8 @@ Assemblr for Flickr
 
 This app downloads images from Flickr and combines them into an image grid.
 
+Note: Ruby v2.1+ is needed.
+
 Installation
 ------------
 
@@ -14,12 +16,12 @@ How to run
 
 Flickr API key and secret must be provided.
 
-You can set them via env variables
+You can set them via environment variables
 
     $ export FLICKR_API_KEY=your_key
     $ export FLICKR_API_SECRET=your_secret
 
-or via command line arguments:
+or via the command line arguments:
 
     $ bin/assemblr --total 15 --flickr-api-key <key> --flickr-api-secret <secret> -o picture.jpg
 

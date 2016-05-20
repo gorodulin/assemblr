@@ -2,15 +2,23 @@
 require "open-uri"
 require "pathname"
 
+#
+# Project-specific Flickr related methods.
+#
 class Assemblr; class FlickrApi
 
 
+  # @param [String] api_key
+  # @param [String] api_secret
   def initialize(api_key:, api_secret:)
     FlickRaw.api_key = api_key
     FlickRaw.shared_secret = api_secret
   end
 
 
+  # Download image and save it to a local file.
+  # @param [String] url URL
+  # @param [String] to File path
   def download(url:, to:)
     ::File.open(to, "wb") do |local_file|
       open(url, "rb") do |remote_file|
@@ -20,6 +28,10 @@ class Assemblr; class FlickrApi
   end
 
 
+  # Find image by a keyword.
+  #
+  # @param [String] text Keyword or keywords. String can contain spaces.
+  # @return [Hash] Various details about image found.
   def find_by_text(text)
     text = text.to_s.downcase.strip.gsub(/\s+/, " ")
     tags = text.split(" ").join(",") # Comma-separated keywords
@@ -36,6 +48,10 @@ class Assemblr; class FlickrApi
   end
 
 
+  # Every image on Flickr is stored in various sizes.
+  # This method chooses the closest to <tt>min_height</tt>
+  # @return [Hash] image details.
+  # @return [nil] if no applicable size found.
   def size_for(image, min_height:)
     image_sizes  = flickr.photos.getSizes(photo_id: image.id)
     perfect_size = image_sizes.detect{ |size| size.height.to_i > min_height} # TODO: replace to max_by
