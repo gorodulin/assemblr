@@ -11,8 +11,8 @@ class Assemblr; class FlickrApi
   # @param [String] api_key
   # @param [String] api_secret
   def initialize(api_key:, api_secret:)
-    FlickRaw.api_key = api_key
-    FlickRaw.shared_secret = api_secret
+    ::FlickRaw.api_key = api_key
+    ::FlickRaw.shared_secret = api_secret
   end
 
 
@@ -34,14 +34,16 @@ class Assemblr; class FlickrApi
   # @return [Hash] Various details about image found.
   def find_by_text(text)
     text = text.to_s.downcase.strip.gsub(/\s+/, " ")
-    tags = text.split(" ").join(",") # Comma-separated keywords
+    tags = text.split(" ").join(",") # Comma-separated keywords.
     underscore = ->(text) { text.tr(" ", "_") }
     response = flickr.photos.search(
       text: text,
       tags: tags,
+      tag_mode: "all",
+      license: "1,2,3,4,5,6,7,8", # @see https://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
       sort: "interestingness-desc",
-      content_type: 1,   # Photos only
-      privacy_filter: 1, # Public only
+      content_type: 1,   # Photos only.
+      privacy_filter: 1, # Public only.
       per_page: 1,
     )
     response.first

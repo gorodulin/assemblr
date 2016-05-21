@@ -3,11 +3,34 @@ Assemblr for Flickr
 
 This app downloads images from Flickr and combines them into an image grid.
 
-Note: Ruby v2.1+ is needed.
+Prerequisites
+-------------
+
+1. Ruby v2.1+
+2. ImageMagick
+
+Make sure you have ImageMagick installed:
+
+    # Check if imagemagick's `convert` is installed
+    $ which convert
+
+OSX:
+
+    # Install package from http://cactuslab.com/imagemagick/
+    # OR
+    # use brew:
+    $ brew install imagemagick
+
+Ubuntu:
+
+    $ sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
 
 Installation
 ------------
 
+This will install all the gems needed into `<appdir>/vendor/gems`:
+
+    $ gem install bundler
     $ cd <app_directory>
     $ ./install.sh
 
