@@ -48,7 +48,7 @@ class Assemblr; class ArgvParser
         options[:row_height_px] = px
       end
 
-      desc = "Adjust dimensions so that they're dividable by 8px. Default: true"
+      desc = "Adjust dimensions so that they're dividable by 8px. Default: false"
       opts.on("--[no-]adjust-8px", desc) do |bool|
         options[:is_adjust8px] = bool
       end

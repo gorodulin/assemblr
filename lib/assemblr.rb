@@ -10,17 +10,18 @@ require_relative "random_line_picker"
 #
 class Assemblr
 
+  attr_writer :row_height
+  attr_reader :flickr_helper
+
+
   def initialize(options)
     @options = Default.options.merge(options)
-    if @options[:is_adjust8px]
-      @options[:row_height_px] = (@options[:row_height_px]/8).ceil * 8
-    end
     @flickr_helper = FlickrApi.new({
       api_key: @options[:flickr_api_key],
       api_secret: @options[:flickr_api_secret],
     })
 
-    report "Target row height: #{@options[:row_height_px]}"
+    report "Target row height: #{row_height}"
     report "Number of images to collect: #{@options[:number_of_images]}"
   end
 
@@ -42,7 +43,7 @@ class Assemblr
   # @param [Hash] images
   def combine!(images)
     target_widths = images.collect do |image|
-      [image, ((image[:width] * @options[:row_height_px]) / image[:height]).round]
+      [image, ((image[:width] * row_height) / image[:height]).round]
     end.to_h # Hash of pairs: {image => target_width}
 
     # Partition images into groups of same width (rows).
@@ -64,7 +65,7 @@ class Assemblr
         image, uncut_width = *i
         uncut_widths.delete_at( i = uncut_widths.index(uncut_width))
         # Add to final image:
-        renderer.add(image, width: cut_widths.delete_at(i), height: @options[:row_height_px], row: row_no)
+        renderer.add(image, width: cut_widths.delete_at(i), height: row_height, row: row_no)
       end
     end
     renderer.write(output_filename: @options[:output_filename], quality: @options[:output_quality])
@@ -96,7 +97,7 @@ class Assemblr
         next
       end
 
-      unless size_data = @flickr_helper.size_for(image_data, min_height: @options[:row_height_px])
+      unless size_data = @flickr_helper.size_for(image_data, min_height: row_height)
         report "no valid size found"
         next
       end
@@ -142,6 +143,18 @@ class Assemblr
   def report(text, newline: true)
     return unless verbose?
     newline ? puts(text) : print(text)
+  end
+
+
+  # Row height to be achieved.
+  #
+  # @return [Fixnum]
+  def row_height
+    @row_height ||= if @options[:is_adjust8px]
+      @options[:row_height_px].div(8) * 8
+    else
+      @options[:row_height_px]
+    end
   end
 
 

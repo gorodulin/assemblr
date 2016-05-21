@@ -1,14 +1,16 @@
+
 Assemblr for Flickr
 ===================
 
 This app downloads images from Flickr and combines them into an image grid.
+
 
 Prerequisites
 -------------
 
 1. Ruby v2.1+
 2. ImageMagick
-3. A Wordlist package (or any other dictionary text file, one word per line)
+3. one of Wordlist packages (Linux), or another dictionary (text file, one word per line)
 
 Make sure you have the dictionary file `/usr/share/dict/words`:
 
@@ -35,14 +37,18 @@ Ubuntu:
 
     $ sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
 
+
 Installation
 ------------
 
-This will install all the gems needed into `<appdir>/vendor/gems`:
+This will install all the gems needed into `<app_directory>/vendor/gems`:
 
     $ gem install bundler
     $ cd <app_directory>
     $ ./install.sh
+
+Note: Repeat these steps if you change/upgrade your ruby interpreter.
+
 
 How to run
 ----------
@@ -74,3 +80,13 @@ More options:
     $ bin/assemblr -h
 
 Have fun!
+
+
+TODO LIST:
+----------
+
+* Write specs.
+* Make 8px alignment functional.
+* Calculate number of rows if `--rows auto` argument is given.
+* Extract ::CoreExt classes to a gem.
+
