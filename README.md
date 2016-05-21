@@ -8,10 +8,20 @@ Prerequisites
 
 1. Ruby v2.1+
 2. ImageMagick
+3. A Wordlist package (or any other dictionary text file, one word per line)
+
+Make sure you have the dictionary file `/usr/share/dict/words`:
+
+    # ls -lah /usr/share/dict/
+
+If not, install a wordlist package:
+
+    # Ubuntu/Debian:
+    $ sudo apt-get install wordlist
 
 Make sure you have ImageMagick installed:
 
-    # Check if imagemagick's `convert` is installed
+    # Check if imagemagick's `convert` is installed:
     $ which convert
 
 OSX:
