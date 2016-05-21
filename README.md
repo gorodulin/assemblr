@@ -12,42 +12,17 @@ Prerequisites
 2. ImageMagick
 3. one of Wordlist packages (Linux), or another dictionary (text file, one word per line)
 
-Make sure you have the dictionary file `/usr/share/dict/words`:
-
-    # ls -lah /usr/share/dict/
-
-If not, install a wordlist package:
-
-    # Ubuntu/Debian:
-    $ sudo apt-get install wordlist
-
-Make sure you have ImageMagick installed:
-
-    # Check if imagemagick's `convert` is installed:
-    $ which convert
-
-OSX:
-
-    # Install package from http://cactuslab.com/imagemagick/
-    # OR
-    # use brew:
-    $ brew install imagemagick
-
-Ubuntu:
-
-    $ sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
-
 
 Installation
 ------------
 
-This will install all the gems needed into `<app_directory>/vendor/gems`:
+This will install all the gems required into the `<app_directory>/vendor/gems` folder:
 
     $ gem install bundler
     $ cd <app_directory>
     $ ./install.sh
 
-Note: Repeat these steps if you change/upgrade your ruby interpreter.
+Note: Repeat these steps if you have switched/upgraded your ruby interpreter.
 
 
 How to run
@@ -80,6 +55,38 @@ More options:
     $ bin/assemblr -h
 
 Have fun!
+
+
+Troubleshooting
+---------------
+
+**ERROR: No such file or directory @ rb_sysopen - /usr/share/dict/words**
+
+Make sure you have the dictionary file `/usr/share/dict/words`:
+
+    # ls -lah /usr/share/dict/
+
+If not, install a wordlist package:
+
+    # Ubuntu/Debian:
+    $ sudo apt-get install wordlist
+
+
+**How to install ImageMagick**
+
+    # Check if imagemagick is installed:
+    $ which convert
+
+OSX:
+
+    # Install package from http://cactuslab.com/imagemagick/
+    # OR
+    # use brew:
+    $ brew install imagemagick
+
+Ubuntu:
+
+    $ sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
 
 
 TODO LIST:
