@@ -16,7 +16,7 @@ Prerequisites
 Installation
 ------------
 
-This will install all the gems required into the `<app_directory>/vendor/gems` folder:
+This will install all the gems required into the `<app_directory>/vendor/bundle` folder:
 
     $ gem install bundler
     $ cd <app_directory>
@@ -93,7 +93,7 @@ TODO LIST:
 ----------
 
 * Write specs.
-* Make 8px alignment functional.
-* Calculate number of rows if `--rows auto` argument is given.
-* Extract ::CoreExt classes to a gem.
+* Make 8px alignment work as intended.
+* Auto-adjust number of rows if `--rows auto`.
+* Extract ::CoreExt classes into a gem.
 
