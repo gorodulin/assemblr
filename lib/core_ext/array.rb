@@ -57,9 +57,7 @@ module CoreExt; module Array
 end; end
 
 
-if defined? Array
-  Array.class_eval do
-    include CoreExt::Array
-  end
+Array.class_eval do
+  include CoreExt::Array
 end
 
